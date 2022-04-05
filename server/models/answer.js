@@ -5,11 +5,11 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class Answer extends Model {
     static associate(models) {
-      Question.belongsTo(models.User, {
+      Answer.belongsTo(models.User, {
         foreignKey: 'userId',
         onDelete: 'CASCADE'
       });
-      Question.belongsTo(models.Question, {
+      Answer.belongsTo(models.Question, {
         foreignKey: 'questionId',
         onDelete: 'CASCADE'
       });
