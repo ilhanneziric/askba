@@ -5,6 +5,6 @@ const auth = require('../utils/authMiddleware');
 
 router.post('/register', authControllers.register);
 router.post('/login', authControllers.login);
-router.get('/is-verify', auth,authControllers.isVerify);
+router.get('/is-verify', auth, authControllers.isVerify);
 
 module.exports = router;

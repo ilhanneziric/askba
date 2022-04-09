@@ -1,0 +1,65 @@
+@import './colors';
+
+.logRegInput{
+    display: block;
+    width: 30em;
+    height: 2.5em;
+    outline: transparent;
+    border: 2px solid $grey;
+    border-radius: 10px;
+    padding: 5px 10px;
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+}
+
+.logRegForm{
+    margin: 2rem 7rem 0 7rem;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.logRegInput:focus{
+    outline: 2px solid $pink;
+    border: 2px solid $pink;
+}
+
+.logRegLbl{
+    font-size: 1.3rem;
+    // margin-bottom: 1rem;
+}
+
+.logRegLink{
+    text-align: center;
+    display: block;
+}
+
+.logTitle{
+    text-align: center;
+    margin-top: 5rem;
+}
+
+
+.regTitle{
+    text-align: center;
+}
+
+.logRegSubmit{
+    background-color: $pink;
+    color: white;
+    font-size: 1.4rem;
+    padding: 10px;
+    border: 3px solid $pink;
+    border-radius: 10px;
+    width: 100%;
+    margin: 1rem 0;
+}
+
+.logRegSubmit:hover{
+    background-color: transparent;
+    color: $pink;    
+}
+
+.errMsg{
+    color: red;
+}
