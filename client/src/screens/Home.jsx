@@ -1,16 +1,15 @@
-import Logo from "../components/Logo";
+import Header from "../components/Header";
 
-const Home = ({setAuth}) => {
-  const logout = e => {
-    e.preventDefault();
-    localStorage.removeItem('token');
-    setAuth(false);
-  }
+const Home = ({setAuth, isAuthenticated}) => {
+  
   return (
     <>
-      <Logo/> <br />
+      <div className="contac">
+        
+        <Header isAuthenticated={isAuthenticated}/>
+      </div>
+      <br />
       <h1>Home</h1>
-      <button onClick={(e) => logout(e)}>Log Out</button>
     </>
   )
 }

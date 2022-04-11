@@ -47,7 +47,7 @@ const login = async (req,res) => {
 
 const isVerify = async (req,res) => {
     try {
-        res.json(true);
+        res.json({isAuthenticated: true, userId: req.user});
     } catch (err) {
         return res.status(500).send('Server Error');
     }

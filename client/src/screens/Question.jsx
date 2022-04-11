@@ -1,7 +1,11 @@
+import Header from "../components/Header";
 
 const Question = () => {
   return (
-    <div>Question</div>
+    <>
+      <Header isAuthenticated={false}/>
+      <div>Question</div>
+    </>
   )
 }
 
