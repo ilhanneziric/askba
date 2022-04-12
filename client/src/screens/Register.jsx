@@ -4,7 +4,7 @@ import { toast } from "react-toastify"
 import axios from 'axios';
 import Logo from "../components/Logo";
 import '../styles/inputs.scss'
-import validation from "../validation";
+import { userValidation } from "../validations";
 
 const Register = ({setAuth}) => {
   const [inputs, setInputs] = useState({
@@ -25,7 +25,7 @@ const Register = ({setAuth}) => {
   const onSubmitForm = async e => {
     e.preventDefault();
     try {
-        const { error } = validation({email: email, password: password});
+        const { error } = userValidation({email: email, password: password});
 
         if(error){
           // setError(error.details[0].message.replaceAll('"', '').charAt(0).toUpperCase() + error.details[0].message.replaceAll('"', '').slice(1));

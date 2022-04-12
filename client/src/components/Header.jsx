@@ -8,7 +8,7 @@ const Header = ({isAuthenticated}) => {
   return (
     <>
       <Logo /> 
-      <AddQuestion/>
+      {isAuthenticated && <AddQuestion/>}
       {isAuthenticated ? (<Link to='/profile'><ProfileBtn/></Link>) : (<LogRegBtn/>)}
     </>
   )
