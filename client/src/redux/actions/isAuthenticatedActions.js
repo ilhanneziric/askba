@@ -1,8 +1,35 @@
+import axios from 'axios';
 import * as actionTypes from '../actionTypes/isAuthenticatedActionTypes';
 
-export const updIsAuthenticated = isAuth => {
-    return {
-        type: actionTypes.UPDATE_ISAUTHENTICATED,
-        payload: isAuth
-    };
-};
+import { updUserId } from '../actions/userIdActions';
+
+export const updIsAuthenticated = () => async(dispatch) => {
+    try {
+
+        if(localStorage.getItem('token') !== null){
+            const response = await axios.get('http://localhost:5000/api/auth/is-verify', {
+                headers: {token: localStorage.token}
+            });
+            const parseRes = await response.data;
+            dispatch({
+                type: actionTypes.UPDATE_ISAUTHENTICATED,
+                payload: parseRes.isAuthenticated  
+            });
+            dispatch(updUserId(parseRes.userId));
+        }else{
+            dispatch({
+                type: actionTypes.UPDATE_ISAUTHENTICATED,
+                payload: false  
+            });
+            dispatch(updUserId(null));
+        }
+        
+    } catch (err) {
+        console.log(err);
+        dispatch({
+            type: actionTypes.UPDATE_ISAUTHENTICATED,
+            payload: false  
+        });
+        dispatch(updUserId(null));
+    }
+}

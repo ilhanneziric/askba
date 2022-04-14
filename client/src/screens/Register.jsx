@@ -6,7 +6,11 @@ import Logo from "../components/Logo";
 import '../styles/inputs.scss'
 import { userValidation } from "../validations";
 
-const Register = ({setAuth}) => {
+import { useDispatch,  } from "react-redux";
+import { updIsAuthenticated } from '../redux/actions/isAuthenticatedActions';
+
+const Register = () => {
+  const dispatch = useDispatch();
   const [inputs, setInputs] = useState({
     firstName: '',
     lastName: '',
@@ -35,12 +39,12 @@ const Register = ({setAuth}) => {
           const parseRes = await response.data;
           if(parseRes){
               localStorage.setItem('token', parseRes);
-              setAuth(true);
+              dispatch(updIsAuthenticated());
               toast.success(`Welcome ${firstName} ${lastName}`)
           }
         }
     } catch (err) {
-        setAuth(false);
+        dispatch(updIsAuthenticated());
         toast.error(err.response.data);
     }
 }

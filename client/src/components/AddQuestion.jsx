@@ -4,10 +4,11 @@ import { toast } from "react-toastify"
 import { useState } from 'react';
 import '../styles/inputs.scss'
 import { questionValidation } from "../validations";
-import { useSelector } from 'react-redux';
-import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
+import { addQuestion} from '../redux/actions/questionsActions';
 
 const AddQuestion = () => {
+  const dispatch = useDispatch();
   const userId = useSelector(state => state.userId);
 
   const [show, setShow] = useState(false);
@@ -26,24 +27,18 @@ const AddQuestion = () => {
   const { title, description} = inputs;
 
   const onChange = e => {
-    setInputs({...inputs, [e.target.name] : e.target.value});        
+    setInputs({...inputs, [e.target.name] : e.target.value, userId : userId});
   }
 
   const onSubmitForm = async e => {
     e.preventDefault();
-    console.log(inputs);
     try {
         const { error } = questionValidation({title: title, description: description});
-        console.log(error);
         if(error){
             // setError(error.details[0].message.replaceAll('"', '').charAt(0).toUpperCase() + error.details[0].message.replaceAll('"', '').slice(1));
             toast.error(error.details[0].message.replaceAll('"', '').charAt(0).toUpperCase() + error.details[0].message.replaceAll('"', '').slice(1))
         }else{
-            const response = await axios.post('http://localhost:5000/api/question', inputs, {
-              headers: {token: localStorage.token}
-            });
-            const parseRes = await response.data;
-            console.log(parseRes);
+            const parseRes = dispatch(addQuestion(inputs));
             if(parseRes){
                 toast.success('Question added successfully');
                 setShow(false);
@@ -52,7 +47,7 @@ const AddQuestion = () => {
             }
         }
     } catch (err) {
-        toast.error(err.response.data);
+        // toast.error(err.response.data);
         console.log(err);
     }
 } 

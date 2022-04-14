@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
-import { updUserId } from "../redux/actions/userIdActions";
+import { updIsAuthenticated } from '../redux/actions/isAuthenticatedActions';
 import Header from "../components/Header";
 import { useEffect, useState } from "react";
 import { toast } from 'react-toastify'
 import axios from "axios";
 
-const Profile = ({setAuth}) => {
+const Profile = () => {
   const dispatch = useDispatch();
   const userId = useSelector(state => state.userId);
 
@@ -14,8 +14,7 @@ const Profile = ({setAuth}) => {
   const logout = e => {
     e.preventDefault();
     localStorage.removeItem('token');
-    setAuth(false);
-    dispatch(updUserId(null));
+    dispatch(updIsAuthenticated());
   }
 
   const getNameById = async() => {
@@ -31,7 +30,7 @@ const Profile = ({setAuth}) => {
 
   useEffect(() => {
     userId !== null && getNameById();
-  },[])
+  },[userId])
 
   return (
     <>
