@@ -1,0 +1,2 @@
+export const UPDATE_QUESTION = "UPDATE_QUESTION";
+export const GET_QUESTION = "GET_QUESTION";

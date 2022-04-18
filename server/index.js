@@ -10,11 +10,13 @@ const authRoutes = require('./routes/authRoutes');
 const questionRoutes = require('./routes/questionRoutes');
 const answerRoutes = require('./routes/answerRoutes');
 const userRoutes = require('./routes/userRoutes');
+const likeRoutes = require('./routes/likeRoutes');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/question', questionRoutes);
 app.use('/api/answer', answerRoutes);
 app.use('/api/user', userRoutes);
+app.use('/api/like', likeRoutes);
 
 app.use('/', async (req,res) => {
     res.status(200).send('Hey AskBa');

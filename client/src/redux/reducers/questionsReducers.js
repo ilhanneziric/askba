@@ -1,12 +1,12 @@
 import * as actionTypes from '../actionTypes/questionsActionTypes';
 
-export const questionReducer = (state = [], action) => {
+export const questionsReducer = (state = [], action) => {
     switch(action.type){
         case(actionTypes.ADD_QUESTION):
             const question = action.payload;
             return {
                 ...state,
-                questions: [...state.questions, question]
+                questions: [question,...state.questions]
             };
         case(actionTypes.REMOVE_QUESTION):
             return{

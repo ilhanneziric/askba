@@ -13,12 +13,13 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'questionId',
         onDelete: 'CASCADE'
       });
+      Answer.hasMany(models.Like, {
+        foreignKey: 'answerId'
+      });
     }
   }
   Answer.init({
     text: DataTypes.STRING,
-    likes: DataTypes.INTEGER,
-    dislikes: DataTypes.INTEGER,
     userId: DataTypes.INTEGER,
     questionId: DataTypes.INTEGER
   }, {

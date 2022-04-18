@@ -63,3 +63,23 @@
 .errMsg{
     color: red;
 }
+
+.answerBtn{
+    @extend .logRegSubmit;
+    width: 30%;
+    font-size: 1rem;
+    padding: 5px;
+    margin-top: 0.5rem;
+    float:right;
+    display: inline;
+}
+
+.answerBtn:hover{
+    background-color: white;
+}
+
+.editbtn{
+    @extend .answerBtn;
+    width: 15%;
+    margin-left: 10px;
+}

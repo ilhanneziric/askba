@@ -4,6 +4,7 @@ const db = require('../models/index');
 const Question = db.Question;
 const User = db.User;
 const Answer = db.Answer;
+const Like = db.Like;
 
 const getAllQuestions = async (req,res) => {
     try {
@@ -12,7 +13,12 @@ const getAllQuestions = async (req,res) => {
                 model: User
             },{
                 model: Answer
-            }]
+            },{
+                model: Like
+            }],
+            order: [
+                ['createdAt', 'DESC']
+            ]
         });
         return res.status(200).json(questions);
     } catch (err) {
@@ -27,7 +33,13 @@ const getQuestion = async (req,res) => {
             include: [{
                 model: User
             },{
-                model: Answer
+                model: Answer,
+                include: [User, Like],
+                order: [
+                    ['createdAt', 'ASC']
+                ]
+            },{
+                model: Like
             }]
         });
         if(question){

@@ -19,8 +19,6 @@ const AddQuestion = () => {
   const [inputs, setInputs] = useState({
     title: '',
     description: '',
-    likes: 0,
-    dislikes: 0,
     userId: userId
   });
 

@@ -30,7 +30,7 @@ function App() {
       <Router>
         <div className='container'>
           <Routes>
-            <Route path='/' element={<Home isAuthenticated={isAuthenticated}/>}/>
+            <Route path='/' element={<Home/>}/>
             
             <Route path='/login' element={userId !== null ? (<Navigate to='/'/>) : (<Login/>)}/>
             
@@ -38,7 +38,7 @@ function App() {
             
             <Route path='/profile' element={isAuthenticated ? (<Profile/>) : (<Navigate to='/login'/>)}/>
 
-            <Route path='/question' element={<Question isAuthenticated={isAuthenticated}/>}/>
+            <Route path='/question/:id' element={<Question/>}/>
             <Route path='/*' element={<Page404/>}/>
           </Routes>
         </div>

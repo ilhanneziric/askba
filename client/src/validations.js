@@ -15,3 +15,10 @@ export const questionValidation = data => {
     });
     return schema.validate(data);
 };
+
+export const answerValidation = data => {
+    const schema = Joi.object({
+        text: Joi.string().min(10).required()
+    });
+    return schema.validate(data);
+};

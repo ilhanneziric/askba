@@ -34,7 +34,7 @@ const Profile = () => {
 
   return (
     <>
-      <Header isAuthenticated={false}/>
+      <Header/>
       <div>Profile {name}, id={userId}</div>
       <button onClick={(e) => logout(e)}>Log Out</button>
     </>

@@ -3,8 +3,11 @@ import AddQuestion from "../components/AddQuestion";
 import Logo from "../components/Logo";
 import LogRegBtn from "../components/LogRegBtn";
 import ProfileBtn from "../components/ProfileBtn";
+import { useSelector } from "react-redux";
 
-const Header = ({isAuthenticated}) => {
+const Header = () => {
+  const isAuthenticated = useSelector(state => state.isAuthenticated);
+  
   return (
     <>
       <Logo /> 

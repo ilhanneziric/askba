@@ -5,20 +5,22 @@ import '../styles/home.scss'
 import { getQuestions } from '../redux/actions/questionsActions';
 import { useDispatch, useSelector } from "react-redux";
 
-const Home = ({isAuthenticated}) => {
+const Home = () => {
   const dispatch = useDispatch();
   const questions = useSelector(state => state.questions);
 
   useEffect(() => {
     dispatch(getQuestions());
   }, [])
+
+  
   
   return (
     <>
-      <Header isAuthenticated={isAuthenticated}/>
+      <Header/>
       <div className="content">
       <div className="main-bar">
-      { questions.questions !== undefined ? (questions.questions.map((q) => (<QuestionCard title={q.title} key={q.id}/>))) : (<></>)}
+      { questions.questions !== undefined ? (questions.questions.map((q) => (<QuestionCard question={q} key={q.id}/>))) : (<></>)}
       </div>
         
       <div className="side-bar">
@@ -32,7 +34,7 @@ const Home = ({isAuthenticated}) => {
         I am the King!
         </div>
         <div className="inner-bar">
-
+          { questions.questions !== undefined ? (questions.questions.map((q) => (<QuestionCard title={q.title} key={q.id}/>))) : (<></>)}
         </div>
       </div>
       </div>

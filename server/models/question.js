@@ -12,13 +12,14 @@ module.exports = (sequelize, DataTypes) => {
       Question.hasMany(models.Answer, {
         foreignKey: 'questionId'
       });
+      Question.hasMany(models.Like, {
+        foreignKey: 'questionId'
+      });
     }
   }
   Question.init({
     title: DataTypes.STRING,
     description: DataTypes.STRING,
-    likes: DataTypes.INTEGER,
-    dislikes: DataTypes.INTEGER,
     userId: DataTypes.INTEGER
   }, {
     sequelize,

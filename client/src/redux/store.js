@@ -4,17 +4,18 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 import { isAuthenticatedReducer } from './reducers/isAuthenticatedReducers';
 import { userIdReducer } from './reducers/userIdReducers';
-import { questionReducer } from './reducers/questionsReducers';
+import { questionsReducer } from './reducers/questionsReducers';
+import { questionReducer } from './reducers/questionReducers';
 
 const reducers = combineReducers({
     isAuthenticated: isAuthenticatedReducer,
     userId: userIdReducer,
-    questions: questionReducer
+    questions: questionsReducer,
+    question: questionReducer
 });
 
 const middleware = [thunk];
 
-//window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 
 const store = createStore(reducers, composeWithDevTools(applyMiddleware(...middleware)) );
 

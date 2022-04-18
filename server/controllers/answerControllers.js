@@ -4,6 +4,7 @@ const db = require('../models/index');
 const Question = db.Question;
 const User = db.User;
 const Answer = db.Answer;
+const Like = db.Like;
 
 const getAllAnswers = async (req,res) => {
     try {
@@ -12,7 +13,12 @@ const getAllAnswers = async (req,res) => {
                 model: User
             },{
                 model: Question
-            }]
+            },{
+                model: Like
+            }],
+            order: [
+                ['createdAt', 'DESC']
+            ]
         });
         return res.status(200).json(answers);
     } catch (err) {
@@ -28,9 +34,11 @@ const getAnswer = async (req,res) => {
                 model: User
             },{
                 model: Question
+            },{
+                model: Like
             }]
         });
-        if(question){
+        if(answer){
             return res.status(200).json(answer);
         }
         return res.status(404).send('Answer with the specified id does not exists');
