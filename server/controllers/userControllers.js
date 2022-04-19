@@ -31,7 +31,7 @@ const updateUser = async (req,res) => {
         });
         if(updated){
             const updatedUser = await User.findOne({where: {id: req.params.id}});
-            return res.status(200).json({user: updatedUser});
+            return res.status(200).json(updatedUser);
         }
         return res.status(500).send('User not found');
     } catch (err) {

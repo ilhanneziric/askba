@@ -29,3 +29,11 @@ export const emailValidation = data => {
     });
     return schema.validate(data);
 };
+
+export const passwordValidation = data => {
+    const schema = Joi.object({
+        newPassword: Joi.string().min(5).required(),
+        currentPassword: Joi.string().min(5).required(),
+    });
+    return schema.validate(data);
+};

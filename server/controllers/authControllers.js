@@ -29,7 +29,6 @@ const register = async (req,res) => {
 const login = async (req,res) => {
     try {
         const { error } = validation({email:req.body.email, password: req.body.password});
-        console.log(req.body);
         if(error) return res.status(400).send(error.details[0].message);
     
         const user = await User.findOne({where: {email: req.body.email}});
@@ -53,8 +52,33 @@ const isVerify = async (req,res) => {
     }
 }
 
+const changePassword = async (req,res) => {
+    try {    
+        const user = await User.findOne({where: {id: req.params.id}});
+        if(!user) return res.status(400).send('Wrong email or password');
+    
+        const validPass = await bcrypt.compare(req.body.currentPassword, user.password);
+        if(!validPass) return res.status(400).send('Wrong password');
+
+        const salt = await bcrypt.genSalt(10);
+        req.body.newPassword = await bcrypt.hash(req.body.newPassword, salt);
+    
+        const [updated] = await User.update({password: req.body.newPassword}, {
+            where: {id: req.params.id}
+        });
+        if(updated){
+            const updatedUser = await User.findOne({where: {id: req.params.id}});
+            return res.status(200).json(updatedUser);
+        }
+        return res.status(500).send('User not found');
+    } catch (err) {
+        return res.status(500).send('Server Error');
+    }
+}
+
 module.exports = {
     register,
     login,
-    isVerify
+    isVerify,
+    changePassword
 }
