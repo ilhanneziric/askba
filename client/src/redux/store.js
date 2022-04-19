@@ -6,12 +6,14 @@ import { isAuthenticatedReducer } from './reducers/isAuthenticatedReducers';
 import { userIdReducer } from './reducers/userIdReducers';
 import { questionsReducer } from './reducers/questionsReducers';
 import { questionReducer } from './reducers/questionReducers';
+import { userReducer } from './reducers/userReducers';
 
 const reducers = combineReducers({
     isAuthenticated: isAuthenticatedReducer,
     userId: userIdReducer,
     questions: questionsReducer,
-    question: questionReducer
+    question: questionReducer,
+    user: userReducer
 });
 
 const middleware = [thunk];

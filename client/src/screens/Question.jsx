@@ -11,7 +11,7 @@ import { answerValidation } from "../validations";
 import { getQuestion } from "../redux/actions/questionActions";
 import { like, deleteLike} from '../redux/actions/likeActions';
 import DeleteQuestion from "../components/DeleteQuestion";
-import AddQuestion from "../components/AddQuestion";
+import AddEditQuestion from "../components/AddEditQuestion";
 
 const Question = () => {
 
@@ -102,7 +102,7 @@ const Question = () => {
         <div className="qtitle">{question.title}</div>
         {question.userId === userid && <div className="editDeleteIconsQuestion">
             <DeleteQuestion show={show} handleClose={handleClose}/>
-            <AddQuestion show={showEdit} handleClose={handleCloseEdit} handleShow={handleShowEdit} isEdit={true}/>
+            <AddEditQuestion show={showEdit} handleClose={handleCloseEdit} handleShow={handleShowEdit} isEdit={true}/>
             <AiOutlineEdit className="answerIcon questionIcon" onClick={handleShowEdit}/>
             <AiOutlineDelete className="answerIcon questionIcon" onClick={handleShow}/>
           </div>

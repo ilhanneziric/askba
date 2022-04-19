@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addQuestion} from '../redux/actions/questionsActions';
 import { editQuestion } from '../redux/actions/questionActions';
 
-const AddQuestion = ({isEdit = false, show, handleClose, handleShow}) => {
+const AddEditQuestion = ({isEdit = false, show, handleClose, handleShow}) => {
   const dispatch = useDispatch();
   const userId = useSelector(state => state.userId);
   const question = useSelector(state => state.question);
@@ -33,7 +33,6 @@ const AddQuestion = ({isEdit = false, show, handleClose, handleShow}) => {
         }else{
             var parseRes = null;
             isEdit ? parseRes = dispatch(editQuestion(inputs)) : parseRes = dispatch(addQuestion(inputs));
-            console.log(parseRes);
             if(parseRes){
                 isEdit ? parseRes = toast.success('Question edited successfully') : toast.success('Question added successfully');
                 handleClose();
@@ -79,4 +78,4 @@ const AddQuestion = ({isEdit = false, show, handleClose, handleShow}) => {
   )
 }
 
-export default AddQuestion
+export default AddEditQuestion

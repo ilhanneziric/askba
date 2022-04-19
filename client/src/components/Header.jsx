@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import AddQuestion from "../components/AddQuestion";
+import AddEditQuestion from "./AddEditQuestion";
 import Logo from "../components/Logo";
 import LogRegBtn from "../components/LogRegBtn";
 import ProfileBtn from "../components/ProfileBtn";
@@ -17,7 +17,7 @@ const Header = () => {
 
     <>
       <Logo /> 
-      {isAuthenticated && <AddQuestion show={show} handleClose={handleClose} handleShow={handleShow}/>}
+      {isAuthenticated && <AddEditQuestion show={show} handleClose={handleClose} handleShow={handleShow}/>}
       {isAuthenticated ? (<Link to='/profile'><ProfileBtn/></Link>) : (<LogRegBtn/>)}
     </>
   )
