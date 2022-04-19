@@ -25,6 +25,45 @@ export const getQuestion = (questionid) => async(dispatch, getState) => {
     }
 };
 
+export const deleteQuestion = (id) => async(dispatch) => {
+    try {
+        const response = await axios.delete(`http://localhost:5000/api/question/${id}`, {
+        headers: {token: localStorage.token}
+      });
+      const parseRes = await response.data;
+
+        dispatch({
+            type: actionTypes.DELETE_QUESTION,  
+        });
+
+        return parseRes;
+
+    } catch (err) {
+        console.log(err);
+        return null;
+    }
+} 
+
+export const editQuestion = (inputs) => async(dispatch, getState) => {
+    try {
+        const {question} = getState();
+        const response = await axios.put(`http://localhost:5000/api/question/${question.id}`, inputs, {
+            headers: {token: localStorage.token}
+        });
+        const parseRes = await response.data;
+        dispatch({
+            type: actionTypes.EDIT_QUESTION,
+            payload: parseRes  
+        });
+
+        return parseRes;
+
+    } catch (err) {
+        console.log(err);
+        return null;
+    }
+} 
+
 
 
 

@@ -10,11 +10,21 @@ import { toast } from "react-toastify";
 import { answerValidation } from "../validations";
 import { getQuestion } from "../redux/actions/questionActions";
 import { like, deleteLike} from '../redux/actions/likeActions';
+import DeleteQuestion from "../components/DeleteQuestion";
+import AddQuestion from "../components/AddQuestion";
 
 const Question = () => {
+
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const [showEdit, setShowEdit] = useState(false);
+  const handleCloseEdit = () => setShowEdit(false);
+  const handleShowEdit = () => setShowEdit(true);
+
   const dispatch = useDispatch();
   const question = useSelector(state => state.question);
-  // const [question, setQuestion] = useState({});
   const isAuthenticated = useSelector(state => state.isAuthenticated);
   const userid = useSelector(state => state.userId);
   const [answer, setAnswer] = useState('');
@@ -25,44 +35,6 @@ const Question = () => {
 
   const onChange = e => {
     setAnswer(e.target.value);
-  }
-
-  const onSubmitFormAnswer = async() => {
-    const { error } = answerValidation({text: answer});
-    if(error){
-        toast.error(error.details[0].message.replaceAll('"', '').charAt(0).toUpperCase() + error.details[0].message.replaceAll('"', '').slice(1))
-    }else{
-      const body = {
-        text: answer,
-        userId: userid,
-        questionId: question.id
-      }
-      await axios.post('http://localhost:5000/api/answer', body,{
-        headers: {token: localStorage.token}
-      });
-      toast.success('Answer added successfully!');
-      setAnswer('');
-      dispatch(getQuestion(params.id));
-    }
-  }
-
-  const onSubmitFormSaveChanges = async() => {
-    const { error } = answerValidation({text: answer});
-    if(error){
-        toast.error(error.details[0].message.replaceAll('"', '').charAt(0).toUpperCase() + error.details[0].message.replaceAll('"', '').slice(1))
-    }else{
-      const body = {
-        text: answer,
-        userId: userid,
-        questionId: question.id
-      }
-      await axios.put(`http://localhost:5000/api/answer/${editing.id}`, body,{
-        headers: {token: localStorage.token}
-      });
-      toast.success('Answer changed successfully!');
-      dispatch(getQuestion(params.id));
-      cancelEditing();
-    }
   }
 
   const onSubmitForm = async(isEdit = false) => {
@@ -102,7 +74,7 @@ const Question = () => {
 
   const deleteAnswer = async(id) => {
     try {
-      const response = await axios.delete(`http://localhost:5000/api/answer/${id}`, {
+      await axios.delete(`http://localhost:5000/api/answer/${id}`, {
         headers: {token: localStorage.token}
       });
       toast.success('Answer deleted successfully!')
@@ -111,7 +83,7 @@ const Question = () => {
       toast.error(err.response.data);
     }
   }
-
+  
   const cancelEditing = () => {
     setEditing(null)
     setAnswer('');
@@ -128,6 +100,13 @@ const Question = () => {
       <Header/>
       <div className="qContainer">
         <div className="qtitle">{question.title}</div>
+        {question.userId === userid && <div className="editDeleteIconsQuestion">
+            <DeleteQuestion show={show} handleClose={handleClose}/>
+            <AddQuestion show={showEdit} handleClose={handleCloseEdit} handleShow={handleShowEdit} isEdit={true}/>
+            <AiOutlineEdit className="answerIcon questionIcon" onClick={handleShowEdit}/>
+            <AiOutlineDelete className="answerIcon questionIcon" onClick={handleShow}/>
+          </div>
+        }
         <p className="qdescription">{question.description}</p>
         {`${question.User?.firstName} ${question.User?.lastName}`.length > 0 && <p className="author">Asked by: {`${question.User?.firstName} ${question.User?.lastName}`}</p>}
         {/* {author.length > 0 && <p>Asked by: {author}</p>} */}

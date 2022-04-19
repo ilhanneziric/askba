@@ -66,8 +66,21 @@ const updateQuestion = async (req,res) => {
             where: {id: req.params.id}
         });
         if(updated){
-            const updatedQuestion = await Question.findOne({where: {id: req.params.id}});
-            return res.status(200).json({question: updatedQuestion});
+            const updatedQuestion = await Question.findOne({
+                where: {id: req.params.id},
+                include: [{
+                    model: User
+                },{
+                    model: Answer,
+                    include: [User, Like],
+                    order: [
+                        ['createdAt', 'ASC']
+                    ]
+                },{
+                    model: Like
+                }]
+            });
+            return res.status(200).json(updatedQuestion);
         }
         return res.status(500).send('Question not found');
     } catch (err) {

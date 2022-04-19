@@ -6,19 +6,15 @@ import '../styles/inputs.scss'
 import { questionValidation } from "../validations";
 import { useSelector, useDispatch } from 'react-redux';
 import { addQuestion} from '../redux/actions/questionsActions';
+import { editQuestion } from '../redux/actions/questionActions';
 
-const AddQuestion = () => {
+const AddQuestion = ({isEdit = false, show, handleClose, handleShow}) => {
   const dispatch = useDispatch();
   const userId = useSelector(state => state.userId);
-
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
+  const question = useSelector(state => state.question);
   const [inputs, setInputs] = useState({
-    title: '',
-    description: '',
+    title: isEdit? question.title : '',
+    description: isEdit? question.description : '',
     userId: userId
   });
 
@@ -33,15 +29,18 @@ const AddQuestion = () => {
     try {
         const { error } = questionValidation({title: title, description: description});
         if(error){
-            // setError(error.details[0].message.replaceAll('"', '').charAt(0).toUpperCase() + error.details[0].message.replaceAll('"', '').slice(1));
             toast.error(error.details[0].message.replaceAll('"', '').charAt(0).toUpperCase() + error.details[0].message.replaceAll('"', '').slice(1))
         }else{
-            const parseRes = dispatch(addQuestion(inputs));
+            var parseRes = null;
+            isEdit ? parseRes = dispatch(editQuestion(inputs)) : parseRes = dispatch(addQuestion(inputs));
+            console.log(parseRes);
             if(parseRes){
-                toast.success('Question added successfully');
-                setShow(false);
-                inputs.title = '';
-                inputs.description = '';
+                isEdit ? parseRes = toast.success('Question edited successfully') : toast.success('Question added successfully');
+                handleClose();
+                if(!isEdit){
+                  inputs.title = '';
+                  inputs.description = '';
+                }
             }
         }
     } catch (err) {
@@ -52,15 +51,14 @@ const AddQuestion = () => {
 
   return (
     <>
-        <button className='addBtn' onClick={handleShow}>Add New Question</button>
+        {!isEdit && <button className='addBtn' onClick={handleShow}>Add New Question</button>}
 
         <Modal show={show} onHide={handleClose} centered={true} dialogClassName="modal-lg">
         <Modal.Header>
-            <Modal.Title>Add new question</Modal.Title>
+            {isEdit ? <Modal.Title>Edit question</Modal.Title> : <Modal.Title>Add new question</Modal.Title>}
         </Modal.Header>
         <Modal.Body>
         {/* <form onSubmit={onSubmitForm}> */}
-          {/* <p className="errMsg">{error}</p> */}
           
           <label htmlFor="title" className="logRegLbl">Title:</label>
           <input type="text" name="title" required className="logRegInput" value={title} onChange={e => onChange(e)} style={{ width: '100%'}}/>
@@ -71,7 +69,10 @@ const AddQuestion = () => {
         {/* </form> */}
         </Modal.Body>
         <Modal.Footer>
-          <button className="logRegSubmit" onClick={onSubmitForm}>Ask</button>
+          {
+            isEdit ? <button className="logRegSubmit" onClick={onSubmitForm}>Edit</button>:
+            <button className="logRegSubmit" onClick={onSubmitForm}>Ask</button>
+          }
         </Modal.Footer>
       </Modal>
     </>
