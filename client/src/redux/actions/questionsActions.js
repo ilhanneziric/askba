@@ -4,7 +4,7 @@ import axios from 'axios';
 export const addQuestion = (question) => async(dispatch) => {
     try {
         const response = await axios.post('http://localhost:5000/api/question', question, {
-        headers: {token: localStorage.token}
+            headers: {token: localStorage.token}
         });
         const parseRes = await response.data;
 
@@ -26,6 +26,21 @@ export const getQuestions = () => async(dispatch) => {
         const {data} = await axios.get("http://localhost:5000/api/question");
         dispatch({
             type: actionTypes.GET_QUESTIONS,
+            payload: data
+        })
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+export const getQuestionsByUserId = () => async(dispatch, getState) => {
+    try {
+        const { userId } = getState();
+        const {data} = await axios.get(`http://localhost:5000/api/question/user/${userId}`, {
+            headers: {token: localStorage.token}
+        });
+        dispatch({
+            type: actionTypes.GET_QUESTIONS_BY_USERID,
             payload: data
         })
     } catch (err) {

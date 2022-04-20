@@ -5,6 +5,7 @@ const Question = db.Question;
 const User = db.User;
 const Answer = db.Answer;
 const Like = db.Like;
+const sequelize = db.sequelize;
 
 const getAllQuestions = async (req,res) => {
     try {
@@ -46,6 +47,42 @@ const getQuestion = async (req,res) => {
             return res.status(200).json(question);
         }
         return res.status(404).send('Question with the specified id does not exists');
+    } catch (err) {
+        return res.status(500).send(err.message);
+    }
+};
+
+const getAllQuestionsByUserId = async (req,res) => {
+    try {
+        const questions = await Question.findAll({
+            where: {userId: req.params.id},
+            order: [
+                ['createdAt', 'DESC']
+            ]
+        });
+        return res.status(200).json(questions);
+    } catch (err) {
+        return res.status(500).send(err.message);
+    }
+};
+
+const getHotQuestions = async (req,res) => {
+    try {
+        const questions = await Question.findAll({
+            limit: 5,
+            subQuery:false,
+            order: [
+                [sequelize.fn('COUNT', sequelize.col('Likes.id')), 'DESC']
+            ],
+            attributes: { 
+                include: [[sequelize.fn("COUNT", sequelize.col("Likes.id")), "likesCount"]] 
+            },
+            include: [{
+                model: Like, attributes: []
+            }],            
+            group: ['Question.id'],
+        });
+        return res.status(200).json(questions);
     } catch (err) {
         return res.status(500).send(err.message);
     }
@@ -105,6 +142,8 @@ const deleteQuestion = async (req,res) => {
 module.exports = {
     getAllQuestions,
     getQuestion,
+    getAllQuestionsByUserId,
+    getHotQuestions,
     addQuestion,
     updateQuestion,
     deleteQuestion

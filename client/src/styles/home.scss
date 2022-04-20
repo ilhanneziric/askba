@@ -25,10 +25,24 @@
     margin-bottom: 10px;
 }
 
+.hotusersbar{
+    @extend .inner-bar;
+    background-color: $lightPink;
+}
+
 .side-bar {
     margin-right: 1rem;
     width: 25%;
     right: 0;
     float: right;
     position:absolute; 
+}
+
+.hotUser{
+    margin-bottom: 5px;
+    background-color: $lightGrey;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    // color: white;
 }

@@ -12,13 +12,11 @@ const AccountDetails = ({user}) => {
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
 
 
 
     const [showp, setShowp] = useState(false);
     const handleClosep = () => setShowp(false);
-    const handleShowp = () => setShowp(true);
     
     const [inputs, setInputs] = useState({
         firstName: user.firstName,

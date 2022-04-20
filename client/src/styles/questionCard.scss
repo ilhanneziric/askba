@@ -2,11 +2,13 @@
 
 .cardContainer{
     background-color: $lightPink;
-    // width: 100%;
     margin-bottom: 10px;
     border-radius: 10px;
     padding: 20px;
-    text-decoration: none;
+    &:hover{
+    cursor: pointer;
+    color: $grey;
+}
 }
 
 .cartTitle{
@@ -14,8 +16,13 @@
     font-size: 1.5rem;
 }
 
-.cardContainer:hover{
-    // outline: 2px solid $grey;
-    cursor: pointer;
-    color: $grey;
+.cardContainerHot{
+    @extend .cardContainer;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.cartTitleHot{
+    font-size: 0.8rem;
 }

@@ -108,7 +108,7 @@ const Question = () => {
           </div>
         }
         <p className="qdescription">{question.description}</p>
-        {`${question.User?.firstName} ${question.User?.lastName}`.length > 0 && <p className="author">Asked by: {`${question.User?.firstName} ${question.User?.lastName}`}</p>}
+        {`${question.User?.firstName} ${question.User?.lastName}`.length > 0 && <p className="author">Asked by: {(`${question.User?.firstName} ${question.User?.lastName}`.length) > 1 ? `${question.User?.firstName} ${question.User?.lastName}` : question.User?.email}</p>}
         {/* {author.length > 0 && <p>Asked by: {author}</p>} */}
         <div className="questionLikesContainer">
 
@@ -150,7 +150,7 @@ const Question = () => {
           <div className="aContainer" key={a.id}>
              <div className="aContainerLeft">
                <div className="atext">{a.text}</div>
-               {`${a.User?.firstName} ${a.User?.lastName}`.length > 0 && <p className="author">Answered by: {`${a.User?.firstName} ${a.User?.lastName}`}</p>}
+               {`${a.User?.firstName} ${a.User?.lastName}`.length > 0 && <p className="author">Answered by: {(`${a.User?.firstName} ${a.User?.lastName}`.length) > 1 ? `${a.User?.firstName} ${a.User?.lastName}` : a.User?.email}</p>}
              </div>
              <div className="aContainerRight">
 
