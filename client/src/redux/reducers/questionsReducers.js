@@ -14,13 +14,13 @@ export const questionsReducer = (state = [], action) => {
                 questions: state.questions.filter((x)=> x.id !== action.payload),
             };
         case(actionTypes.GET_QUESTIONS):
-            return {
-                questions: action.payload
-            };
+            return state = [...state, ...action.payload];
         case(actionTypes.GET_QUESTIONS_BY_USERID):
-            return {
-                questions: action.payload
-            };
+            return state = [...state, ...action.payload];
+        case(actionTypes.GET_INITIAL_QUESTIONS):
+            return state = action.payload;
+        case(actionTypes.GET_INITIAL_QUESTIONS_BY_USERID):
+            return state = action.payload;
         default:
             return state;
 

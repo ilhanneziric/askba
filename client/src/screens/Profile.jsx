@@ -7,7 +7,7 @@ import Questions from "../components/Questions";
 import AccountDetails from "../components/AccountDetails";
 import Notifications from "../components/Notifications";
 import { getUser } from "../redux/actions/userActions";
-import { getQuestionsByUserId } from "../redux/actions/questionsActions";
+// import { getQuestionsByUserId } from "../redux/actions/questionsActions";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -23,7 +23,7 @@ const Profile = () => {
 
   useEffect(() => {
     userId !== null && dispatch(getUser(userId));
-    userId !== null && dispatch(getQuestionsByUserId());
+    // userId !== null && dispatch(getQuestionsByUserId());
   },[userId])
 
   return (
@@ -38,7 +38,7 @@ const Profile = () => {
             {currentPage === 'notifications' ? <div className="profileNavBtn activeBtn">Notifications</div> : <div className="profileNavBtn" onClick={() => setCurrentPage('notifications')}>Notifications</div>}
         </div>
         <div className="profileNavContentContainer">
-          {currentPage === 'account' ? <AccountDetails user={user}/> : currentPage === 'questions' ? <Questions/> : <Notifications/>}
+          {currentPage === 'account' ? <AccountDetails user={user}/> : currentPage === 'questions' ? <Questions isMyQuestions={true}/> : <Notifications/>}
         </div>
       </div></> }
     </>

@@ -4,9 +4,9 @@ const questionControllers = require('../controllers/questionControllers');
 const auth = require('../utils/authMiddleware');
 
 router.get('/hotquestions', questionControllers.getHotQuestions);
-router.get('/', questionControllers.getAllQuestions);
+router.get('/:offset', questionControllers.getAllQuestions);
 router.get('/:id', questionControllers.getQuestion);
-router.get('/user/:id', auth, questionControllers.getAllQuestionsByUserId);
+router.get('/user/:id/:offset', auth, questionControllers.getAllQuestionsByUserId);
 router.post('/', auth, questionControllers.addQuestion);
 router.put('/:id', auth, questionControllers.updateQuestion);
 router.delete('/:id', auth, questionControllers.deleteQuestion);

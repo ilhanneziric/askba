@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import QuestionCard from "../components/QuestionCard";
 import '../styles/home.scss'
-import { getQuestions } from '../redux/actions/questionsActions';
+// import { getQuestions } from '../redux/actions/questionsActions';
 import { useDispatch } from "react-redux";
 import Questions from "../components/Questions";
 import axios from "axios";
@@ -11,6 +11,7 @@ const Home = () => {
   const dispatch = useDispatch();
   const [hotQuestions, setHotQuestions] = useState(null);
   const [hotUsers, setHotUsers] = useState(null);
+  // const [page, setPage] = useState(0);
 
   const getHotQuestions = async() => {
     const {data} = await axios.get("http://localhost:5000/api/question/hotquestions");
@@ -23,7 +24,7 @@ const Home = () => {
   }
 
   useEffect(() => {
-    dispatch(getQuestions());
+    // dispatch(getQuestions(page));
     getHotQuestions();
     getHotUsers();
   }, [])
@@ -37,7 +38,7 @@ const Home = () => {
       </div>
         
       <div className="side-bar">
-        <div className="hotusersbar">
+        <div className="inner-bar">
           The most active users:
           { hotUsers !== null && (hotUsers.map((u) => (<div key={u.id} className='hotUser'>{(`${u.firstName} ${u.lastName}`.length) > 1 ? `${u.firstName} ${u.lastName}` : u.email}</div>)))}
         </div>

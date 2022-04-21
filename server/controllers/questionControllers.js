@@ -9,7 +9,10 @@ const sequelize = db.sequelize;
 
 const getAllQuestions = async (req,res) => {
     try {
+
         const questions = await Question.findAll({
+            offset: req.params.offset,
+            limit: 6,
             include: [{
                 model: User
             },{
@@ -55,6 +58,8 @@ const getQuestion = async (req,res) => {
 const getAllQuestionsByUserId = async (req,res) => {
     try {
         const questions = await Question.findAll({
+            offset: req.params.offset,
+            limit: 6,
             where: {userId: req.params.id},
             order: [
                 ['createdAt', 'DESC']
