@@ -12,6 +12,9 @@ import { getQuestion } from "../redux/actions/questionActions";
 import { like, deleteLike} from '../redux/actions/likeActions';
 import DeleteQuestion from "../components/DeleteQuestion";
 import AddEditQuestion from "../components/AddEditQuestion";
+import socket from '../Socket';
+import { addNotification } from '../redux/actions/notificationsActions';
+import { getUser } from "../redux/actions/userActions";
 
 const Question = () => {
 
@@ -58,6 +61,8 @@ const Question = () => {
             headers: {token: localStorage.token}
           });
           toast.success('Answer added successfully!');
+          socket.emit('send_notification', question.userId);
+          question.User.id !== userid && dispatch(addNotification());
         }
         dispatch(getQuestion(params.id));
         cancelEditing();
@@ -91,7 +96,8 @@ const Question = () => {
 
   useEffect(() => {
     dispatch(getQuestion(params.id));
-  }, [])
+    userid !== null && dispatch(getUser(userid));
+  }, [userid])
 
   return (
     <>

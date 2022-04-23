@@ -5,33 +5,32 @@ import { getQuestions, getQuestionsByUserId, getInitialQuestions, getInitialQues
 import { useEffect, useState } from "react";
 
 import '../styles/profile.scss'
+import { updOffset } from '../redux/actions/offsetActions';
 
 const Questions = ({isMyQuestions = false}) => {
   const dispatch = useDispatch();
   const questions = useSelector(state => state.questions);
   const userId = useSelector(state => state.userId);
 
-  const [offset, setOffSet] = useState(5);
   const [hasMore, setHasMore] = useState(true);
 
   const loadMore = () => {
     let hasMoree;
-    !isMyQuestions ? hasMoree = dispatch(getQuestions(offset)) : (userId !== null && (hasMoree = dispatch(getQuestionsByUserId(offset))));
-    setOffSet(state => state + 5);
+    !isMyQuestions ? hasMoree = dispatch(getQuestions()) : (userId !== null && (hasMoree = dispatch(getQuestionsByUserId())));
+    dispatch(updOffset());
     hasMoree.then((result) => setHasMore(result));
     
   }
 
   useEffect(() => {
-    dispatch(getInitialQuestions());
-
-    !isMyQuestions ? dispatch(getInitialQuestions()) : (userId !== null && dispatch(getInitialQuestionsByUserId()));
+    let hasMoree;
+    !isMyQuestions ? hasMoree = dispatch(getInitialQuestions()) : (userId !== null && (hasMoree = dispatch(getInitialQuestionsByUserId())));
+    hasMoree.then((result) => setHasMore(result));
   }, []);
 
   return (
     <div>
-      { questions !== undefined && (questions.map((q) => (<QuestionCard question={q} key={q.id}/>)))}
-
+      { questions !== undefined && questions?.length !== 0 ? (questions?.map((q) => (<QuestionCard question={q} key={q.id}/>))) : <p>You have no questions!</p>}
       {
         hasMore && 
         <div className="accountBtnContainer" style={{ margin: '1rem 0'}}>

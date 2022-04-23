@@ -3,16 +3,9 @@ import * as actionTypes from '../actionTypes/questionsActionTypes';
 export const questionsReducer = (state = [], action) => {
     switch(action.type){
         case(actionTypes.ADD_QUESTION):
-            const question = action.payload;
-            return {
-                ...state,
-                questions: [question,...state.questions]
-            };
+            return state = [action.payload, ...state];
         case(actionTypes.REMOVE_QUESTION):
-            return{
-                ...state,
-                questions: state.questions.filter((x)=> x.id !== action.payload),
-            };
+            return state = state.filter((x) => x.id !== action.payload);
         case(actionTypes.GET_QUESTIONS):
             return state = [...state, ...action.payload];
         case(actionTypes.GET_QUESTIONS_BY_USERID):
@@ -23,6 +16,5 @@ export const questionsReducer = (state = [], action) => {
             return state = action.payload;
         default:
             return state;
-
     }
 } 

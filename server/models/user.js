@@ -13,7 +13,10 @@ module.exports = (sequelize, DataTypes) => {
       });
       User.hasMany(models.Like, {
         foreignKey: 'userId'
-      })
+      });
+      User.hasMany(models.Notification, {
+        foreignKey: 'userId'
+      });
     }
   }
   User.init({

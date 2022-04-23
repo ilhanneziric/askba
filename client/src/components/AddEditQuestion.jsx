@@ -5,8 +5,9 @@ import { useState } from 'react';
 import '../styles/inputs.scss'
 import { questionValidation } from "../validations";
 import { useSelector, useDispatch } from 'react-redux';
-import { addQuestion} from '../redux/actions/questionsActions';
+import { addQuestion, getQuestions} from '../redux/actions/questionsActions';
 import { editQuestion } from '../redux/actions/questionActions';
+import { updOffsetInceremnt } from '../redux/actions/offsetActions';
 
 const AddEditQuestion = ({isEdit = false, show, handleClose, handleShow}) => {
   const dispatch = useDispatch();
@@ -35,6 +36,7 @@ const AddEditQuestion = ({isEdit = false, show, handleClose, handleShow}) => {
             isEdit ? parseRes = dispatch(editQuestion(inputs)) : parseRes = dispatch(addQuestion(inputs));
             if(parseRes){
                 isEdit ? parseRes = toast.success('Question edited successfully') : toast.success('Question added successfully');
+                dispatch(updOffsetInceremnt());
                 handleClose();
                 if(!isEdit){
                   inputs.title = '';

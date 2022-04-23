@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import QuestionCard from "../components/QuestionCard";
 import '../styles/home.scss'
-// import { getQuestions } from '../redux/actions/questionsActions';
 import { useDispatch } from "react-redux";
 import Questions from "../components/Questions";
 import axios from "axios";
@@ -11,7 +10,6 @@ const Home = () => {
   const dispatch = useDispatch();
   const [hotQuestions, setHotQuestions] = useState(null);
   const [hotUsers, setHotUsers] = useState(null);
-  // const [page, setPage] = useState(0);
 
   const getHotQuestions = async() => {
     const {data} = await axios.get("http://localhost:5000/api/question/hotquestions");
@@ -24,7 +22,6 @@ const Home = () => {
   }
 
   useEffect(() => {
-    // dispatch(getQuestions(page));
     getHotQuestions();
     getHotUsers();
   }, [])
@@ -34,6 +31,7 @@ const Home = () => {
       <Header/>
       <div className="content">
       <div className="main-bar">
+      Recently added questions:
       <Questions/>
       </div>
         
