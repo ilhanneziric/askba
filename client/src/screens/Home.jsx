@@ -30,7 +30,7 @@ const Home = () => {
         </div>
         <div className="inner-bar">
           Hot Questions:
-          { questions !== null && (questions.map((q) => (<QuestionCard question={q} isHot={true} key={q.id}/>)))}
+          { questions !== null && (questions.map((q) => (<QuestionCard question={q} key={q.id}/>)))}
         </div>
       </div>
       </div>

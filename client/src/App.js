@@ -36,7 +36,7 @@ function App() {
             
             <Route path='/register' element={userId !== null ? (<Navigate to='/'/>) : (<Register/>)}/>
             
-            <Route path='/profile' element={isAuthenticated ? (<Profile/>) : (<Navigate to='/login'/>)}/>
+            <Route path='/profile/:navigation' element={isAuthenticated ? (<Profile/>) : (<Navigate to='/login'/>)}/>
 
             <Route path='/question/:id' element={<Question/>}/>
             <Route path='/*' element={<Page404/>}/>

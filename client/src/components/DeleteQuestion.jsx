@@ -19,7 +19,7 @@ const DeleteQuestion = ({show, handleClose}) => {
       if(parseRes){
         toast.success('Question deleted successfully');
         handleClose();
-        navigate('/');
+        navigate(-1);
     }
     } catch (err) {
         // toast.error(err.response.data);

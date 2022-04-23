@@ -12,7 +12,7 @@ const getAllQuestions = async (req,res) => {
 
         const questions = await Question.findAll({
             offset: req.params.offset,
-            limit: 6,
+            limit: 21,
             include: [{
                 model: User
             },{
@@ -59,7 +59,7 @@ const getAllQuestionsByUserId = async (req,res) => {
     try {
         const questions = await Question.findAll({
             offset: req.params.offset,
-            limit: 6,
+            limit: 21,
             where: {userId: req.params.id},
             order: [
                 ['createdAt', 'DESC']

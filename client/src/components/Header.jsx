@@ -18,7 +18,7 @@ const Header = () => {
     <>
       <Logo /> 
       {isAuthenticated && <AddEditQuestion show={show} handleClose={handleClose} handleShow={handleShow}/>}
-      {isAuthenticated ? (<Link to='/profile'><ProfileBtn/></Link>) : (<LogRegBtn/>)}
+      {isAuthenticated ? (<Link to='/profile/account'><ProfileBtn/></Link>) : (<LogRegBtn/>)}
     </>
   )
 }

@@ -29,9 +29,9 @@ export const getQuestions = () => async(dispatch, getState) => {
         const parseRes = await response.data;
         dispatch({
             type: actionTypes.GET_QUESTIONS,
-            payload: parseRes.slice(0, 5)
+            payload: parseRes.slice(0, 20)
         })
-        const hasMore = await parseRes.length > 5;
+        const hasMore = await parseRes.length > 20;
         return hasMore;
 
     } catch (err) {
@@ -46,9 +46,9 @@ export const getInitialQuestions = () => async(dispatch, getState) => {
         const parseRes = await response.data;
         dispatch({
             type: actionTypes.GET_INITIAL_QUESTIONS,
-            payload: parseRes.slice(0, 5)
+            payload: parseRes.slice(0, 20)
         })
-        const hasMore = await parseRes.length > 5;
+        const hasMore = await parseRes.length > 20;
         return hasMore;
     } catch (err) {
         console.log(err);
@@ -64,9 +64,9 @@ export const getQuestionsByUserId = () => async(dispatch, getState) => {
         const parseRes = await response.data;
         dispatch({
             type: actionTypes.GET_QUESTIONS_BY_USERID,
-            payload: parseRes.slice(0, 5)
+            payload: parseRes.slice(0, 20)
         })
-        const hasMore = await parseRes.length > 5;
+        const hasMore = await parseRes.length > 20;
         return hasMore;
     } catch (err) {
         console.log(err);
@@ -84,9 +84,9 @@ export const getInitialQuestionsByUserId = () => async(dispatch, getState) => {
 
         dispatch({
             type: actionTypes.GET_INITIAL_QUESTIONS_BY_USERID,
-            payload: parseRes.slice(0, 5)
+            payload: parseRes.slice(0, 20)
         })
-        const hasMore = await parseRes.length > 5;
+        const hasMore = await parseRes.length > 20;
         return hasMore;
     } catch (err) {
         console.log(err);

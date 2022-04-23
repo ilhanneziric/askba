@@ -37,7 +37,6 @@ export const getNotifications = () => async(dispatch, getState) => {
             payload: parseRes
         });
 
-        console.log(parseRes);
         await axios.post(`http://localhost:5000/api/notification/user/${userId}`, {
           headers: {token: localStorage.token}
         });
