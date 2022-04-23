@@ -9,6 +9,7 @@ import { questionReducer } from './reducers/questionReducers';
 import { userReducer } from './reducers/userReducers';
 import { offsetReducer } from './reducers/offsetReducers';
 import { notificationsReducer } from './reducers/notificationsReducers';
+import { hottersReducer } from './reducers/hottersReducers';
 
 const reducers = combineReducers({
     isAuthenticated: isAuthenticatedReducer,
@@ -17,7 +18,8 @@ const reducers = combineReducers({
     question: questionReducer,
     user: userReducer,
     offset: offsetReducer,
-    notifications: notificationsReducer
+    notifications: notificationsReducer,
+    hotters: hottersReducer
 });
 
 const middleware = [thunk];
