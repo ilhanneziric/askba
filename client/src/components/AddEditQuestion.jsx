@@ -5,7 +5,7 @@ import { useState } from 'react';
 import '../styles/inputs.scss'
 import { questionValidation } from "../validations";
 import { useSelector, useDispatch } from 'react-redux';
-import { addQuestion, getQuestions} from '../redux/actions/questionsActions';
+import { addQuestion} from '../redux/actions/questionsActions';
 import { editQuestion } from '../redux/actions/questionActions';
 import { updOffsetInceremnt } from '../redux/actions/offsetActions';
 

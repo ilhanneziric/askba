@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { updIsAuthenticated } from '../redux/actions/isAuthenticatedActions';
 import Header from "../components/Header";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import '../styles/profile.scss'
 import Questions from "../components/Questions";
 import AccountDetails from "../components/AccountDetails";
@@ -38,7 +38,7 @@ const Profile = () => {
             {params.navigation === 'notifications' ? <div className="profileNavBtn activeBtn">Notifications</div> : <div className="profileNavBtn" onClick={() => navigate('/profile/notifications')}>Notifications</div>}
         </div>
         <div className="profileNavContentContainer">
-          {params.navigation === 'account' ? <AccountDetails user={user}/> : params.navigation === 'questions' ? <Questions isMyQuestions={true}/> : <Notifications/>}
+          {params.navigation === 'account' ? <AccountDetails/> : params.navigation === 'questions' ? <Questions isMyQuestions={true}/> : <Notifications/>}
         </div>
       </div></> }
     </>
