@@ -24,7 +24,7 @@ const Profile = () => {
 
   useEffect(() => {
     userId !== null && dispatch(getUser(userId));
-  },[userId])
+  },[userId, dispatch])
 
   return (
     <>

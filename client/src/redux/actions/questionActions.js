@@ -12,6 +12,7 @@ export const getQuestion = (questionid) => async(dispatch, getState) => {
     try {
         const response = await axios.get(`http://localhost:5000/api/question/getbyid/${questionid}`);
         const parseRes = await response.data;
+        console.log(parseRes);
         const {userId} = getState();
         parseRes.Answers = [...parseRes.Answers.filter(a => a.userId === userId), ...parseRes.Answers.filter(a => a.userId !== userId)];
         dispatch({

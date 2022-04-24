@@ -8,7 +8,15 @@
     &:hover{
     cursor: pointer;
     color: $grey;
+    }
 }
+
+.cardNotification{
+    @extend .cardContainer;
+    &:hover{
+        cursor:auto;
+        color: inherit;
+    }
 }
 
 .cartTitle{

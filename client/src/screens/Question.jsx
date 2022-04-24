@@ -4,17 +4,14 @@ import '../styles/question.scss'
 import '../styles/inputs.scss'
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import { AiOutlineEdit, AiOutlineDelete, AiOutlineLike, AiOutlineDislike, AiFillLike, AiFillDislike } from "react-icons/ai";
-import { toast } from "react-toastify";
-import { answerValidation } from "../validations";
 import { getQuestion } from "../redux/actions/questionActions";
 import { like, deleteLike} from '../redux/actions/likeActions';
 import DeleteQuestion from "../components/DeleteQuestion";
 import AddEditQuestion from "../components/AddEditQuestion";
-import socket from '../Socket';
-import { addNotification } from '../redux/actions/notificationsActions';
 import { getUser } from "../redux/actions/userActions";
+import Answers from "../components/Answers";
+import { addAnswer, deleteAnswer, editAnswer } from "../redux/actions/answerActions";
 
 const Question = () => {
 
@@ -41,52 +38,13 @@ const Question = () => {
   }
 
   const onSubmitForm = async(isEdit = false) => {
-    const { error } = answerValidation({text: answer});
-    if(error){
-        toast.error(error.details[0].message.replaceAll('"', '').charAt(0).toUpperCase() + error.details[0].message.replaceAll('"', '').slice(1))
-    }else{
-      const body = {
-        text: answer,
-        userId: userid,
-        questionId: question.id
-      }
-      try {
-        if(isEdit){
-          await axios.put(`http://localhost:5000/api/answer/${editing.id}`, body,{
-            headers: {token: localStorage.token}
-          });
-          toast.success('Answer changed successfully!');
-        }else{
-          await axios.post('http://localhost:5000/api/answer', body,{
-            headers: {token: localStorage.token}
-          });
-          toast.success('Answer added successfully!');
-          socket.emit('send_notification', question.userId);
-          question.User.id !== userid && dispatch(addNotification());
-        }
-        dispatch(getQuestion(params.id));
-        cancelEditing();
-      } catch (err) {
-        toast.error(err.response.data);
-      }
-    }
+    isEdit ? dispatch(editAnswer(answer, editing.id)) : dispatch(addAnswer(answer));
+    cancelEditing();
   }
 
   const setEdit = (a) => {
     setAnswer(a.text);
     setEditing(a);
-  }
-
-  const deleteAnswer = async(id) => {
-    try {
-      await axios.delete(`http://localhost:5000/api/answer/${id}`, {
-        headers: {token: localStorage.token}
-      });
-      toast.success('Answer deleted successfully!')
-      dispatch(getQuestion(params.id));
-    } catch (err) {
-      toast.error(err.response.data);
-    }
   }
   
   const cancelEditing = () => {
@@ -97,7 +55,7 @@ const Question = () => {
   useEffect(() => {
     dispatch(getQuestion(params.id));
     userid !== null && dispatch(getUser(userid));
-  }, [userid])
+  }, [userid, dispatch, params.id])
 
   return (
     <>
@@ -140,54 +98,16 @@ const Question = () => {
         <label htmlFor="asnwer" className="logRegLbl">Your answer:</label>
         <textarea type="text" name="description" required className="logRegInput" value={answer} onChange={e => onChange(e)} style={{ width: '100%', height: '4em', marginBottom: '0'}}/>
         {
-          editing === null ? <button className="answerBtn" onClick={() => onSubmitForm(false)}>Answer</button> : <>
+          editing === null ? <button className="answerBtn" onClick={() => onSubmitForm(false)}>Answer</button> : 
+          <>
             <button className="editbtn" onClick={() => onSubmitForm(true)}>Save Changes</button>
             <button className="editbtn" onClick={cancelEditing}>Cancel</button>
-            </>
+          </>
         }
         <br /><br />
       </div>
       )}
-
-      {
-        question?.Answers !== undefined &&
-        question.Answers.map((a) => (
-
-          <div className="aContainer" key={a.id}>
-             <div className="aContainerLeft">
-               <div className="atext">{a.text}</div>
-               {`${a.User?.firstName} ${a.User?.lastName}`.length > 0 && <p className="author">Answered by: {(`${a.User?.firstName} ${a.User?.lastName}`.length) > 1 ? `${a.User?.firstName} ${a.User?.lastName}` : a.User?.email}</p>}
-             </div>
-             <div className="aContainerRight">
-
-             {a.userId === userid && <div className="editDeleteIcons">
-                <div className="answerLikes" style={{visibility: 'hidden'}}>50</div>
-                <AiOutlineEdit className="answerIcon" onClick={() => setEdit(a)}/>
-                <AiOutlineDelete className="answerIcon" onClick={() => deleteAnswer(a.id)}/>
-                <div className="answerLikes" style={{visibility: 'hidden'}}>50</div>
-                <hr style={{width: '100%', margin: '2px'}}/>
-                </div>
-              }
-
-              {a.Likes?.filter((l) => l.userId === userid && l.isDislike === false).length > 0 ? 
-                <AiFillLike className="answerIcon" onClick={() => dispatch(deleteLike(a))}/> 
-              :
-                <AiOutlineLike className="answerIcon" onClick={() => dispatch(like(false, a))}/> 
-              }
-              <div className="answerLikes" style={{margin: '0 2px'}}>{a.Likes?.filter((l) => l.isDislike === false).length}</div>
-              
-              {a.Likes?.filter((l) => l.userId === userid && l.isDislike === true).length > 0 ? 
-                <AiFillDislike className="answerIcon" onClick={() => dispatch(deleteLike(a))}/> 
-              :
-                <AiOutlineDislike className="answerIcon" onClick={() => dispatch(like(true, a))}/> 
-              }              
-              <div className="answerLikes" style={{margin: '0 2px'}}>{a.Likes?.filter((l) => l.isDislike === true).length}</div>
-            </div>
-             
-          </div>        
-        ))
-      }
-
+      <Answers answers={question?.Answers} setEdit={setEdit} deleteAnswer={deleteAnswer}/>
     </>
   )
 }
