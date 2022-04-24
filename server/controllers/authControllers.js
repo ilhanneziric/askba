@@ -3,7 +3,7 @@
 const db = require('../models/index');
 const User = db.User;
 const validation = require('../utils/validation');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 

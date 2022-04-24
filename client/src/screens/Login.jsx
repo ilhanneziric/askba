@@ -60,7 +60,7 @@ const Login = () => {
                     <button className="logRegSubmit">Log In</button>
                 </form>
             </div>
-            <div className="logRegLink">New to Ask Ba? <Link to='/register'>Register</Link></div>
+            <div className="logRegLink">New to Ask Ba? <Link to='/register' className="linkLoginRegister">Register</Link></div>
         </>
     )
 }
