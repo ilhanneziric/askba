@@ -1,5 +1,6 @@
 import *  as actionTypes from '../actionTypes/questionActionTypes';
 import axios from 'axios';
+import { SERVERURL } from '../../serverURL';
 
 export const updQuestion = (question) => {
     return {
@@ -10,7 +11,7 @@ export const updQuestion = (question) => {
 
 export const getQuestion = (questionid) => async(dispatch, getState) => {
     try {
-        const response = await axios.get(`http://localhost:5000/api/question/getbyid/${questionid}`);
+        const response = await axios.get(`${SERVERURL}/api/question/getbyid/${questionid}`);
         const parseRes = await response.data;
         const {userId} = getState();
         parseRes.Answers = [...parseRes.Answers.filter(a => a.userId === userId), ...parseRes.Answers.filter(a => a.userId !== userId)];
@@ -26,7 +27,7 @@ export const getQuestion = (questionid) => async(dispatch, getState) => {
 
 export const deleteQuestion = (id) => async(dispatch) => {
     try {
-        const response = await axios.delete(`http://localhost:5000/api/question/${id}`, {
+        const response = await axios.delete(`${SERVERURL}/api/question/${id}`, {
         headers: {token: localStorage.token}
       });
       const parseRes = await response.data;
@@ -46,7 +47,7 @@ export const deleteQuestion = (id) => async(dispatch) => {
 export const editQuestion = (inputs) => async(dispatch, getState) => {
     try {
         const {question} = getState();
-        const response = await axios.put(`http://localhost:5000/api/question/${question.id}`, inputs, {
+        const response = await axios.put(`${SERVERURL}/api/question/${question.id}`, inputs, {
             headers: {token: localStorage.token}
         });
         const parseRes = await response.data;

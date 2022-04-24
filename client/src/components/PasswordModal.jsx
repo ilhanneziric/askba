@@ -5,7 +5,7 @@ import { passwordValidation } from "../validations";
 import { toast } from "react-toastify"
 import { useState } from 'react';
 import { useSelector } from "react-redux";
-
+import { SERVERURL } from '../serverURL'
 const PasswordModal = ({show, handleClose}) => {
     const user = useSelector(state => state.user);
 
@@ -28,7 +28,7 @@ const PasswordModal = ({show, handleClose}) => {
             if(error){
               toast.error(error.details[0].message.replaceAll('"', '').charAt(0).toUpperCase() + error.details[0].message.replaceAll('"', '').slice(1))
             }else{
-              const response = await axios.put(`http://localhost:5000/api/auth/changepassword/${user.id}`, inputs, {
+              const response = await axios.put(`${SERVERURL}/api/auth/changepassword/${user.id}`, inputs, {
                 headers: {token: localStorage.token}
             });
               const parseRes = await response.data;

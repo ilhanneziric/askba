@@ -2,12 +2,13 @@ import axios from 'axios';
 import * as actionTypes from '../actionTypes/isAuthenticatedActionTypes';
 
 import { updUserId } from '../actions/userIdActions';
+import { SERVERURL } from '../../serverURL';
 
 export const updIsAuthenticated = () => async(dispatch) => {
     try {
 
         if(localStorage.getItem('token') !== null){
-            const response = await axios.get('http://localhost:5000/api/auth/is-verify', {
+            const response = await axios.get(`${SERVERURL}/api/auth/is-verify`, {
                 headers: {token: localStorage.token}
             });
             const parseRes = await response.data;

@@ -1,9 +1,10 @@
 import *  as actionTypes from '../actionTypes/userActionTypes';
 import axios from 'axios';
+import { SERVERURL } from '../../serverURL';
 
-export const getUser = (userid) => async(dispatch, getState) => {
+export const getUser = (userid) => async(dispatch) => {
     try {
-        const response = await axios.get(`http://localhost:5000/api/user/${userid}`);
+        const response = await axios.get(`${SERVERURL}/api/user/${userid}`);
         const parseRes = await response.data;
         
         dispatch({
@@ -20,7 +21,7 @@ export const updUser = (userData) => async(dispatch, getState) => {
 
     try {
         const {userId} = getState();
-        const response = await axios.put(`http://localhost:5000/api/user/${userId}`, userData, {
+        const response = await axios.put(`${SERVERURL}/api/user/${userId}`, userData, {
             headers: {token: localStorage.token}
         });
         const parseRes = await response.data;

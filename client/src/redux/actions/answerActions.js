@@ -4,6 +4,7 @@ import { answerValidation } from '../../validations';
 import socket from '../../Socket'
 import { addNotification } from './notificationsActions';
 import { getQuestion } from './questionActions';
+import { SERVERURL } from '../../serverURL';
 
 export const addAnswer = (answer) => async(dispatch, getState) => {
     const {userId, question} = getState();
@@ -17,7 +18,7 @@ export const addAnswer = (answer) => async(dispatch, getState) => {
         questionId: question.id
       }
       try {
-        await axios.post('http://localhost:5000/api/answer', body,{
+        await axios.post(`${SERVERURL}/api/answer`, body,{
             headers: {token: localStorage.token}
         });
         toast.success('Answer added successfully!');
@@ -42,7 +43,7 @@ export const editAnswer = (answer, id) => async(dispatch, getState) => {
         questionId: question.id
       }
       try {
-        await axios.put(`http://localhost:5000/api/answer/${id}`, body,{
+        await axios.put(`${SERVERURL}/api/answer/${id}`, body,{
             headers: {token: localStorage.token}
         });
         toast.success('Answer changed successfully!');
@@ -56,7 +57,7 @@ export const editAnswer = (answer, id) => async(dispatch, getState) => {
 export const deleteAnswer = (id) => async(dispatch, getState) => {
     try {
         const {question} = getState();
-        await axios.delete(`http://localhost:5000/api/answer/${id}`, {
+        await axios.delete(`${SERVERURL}/api/answer/${id}`, {
           headers: {token: localStorage.token}
         });
         toast.success('Answer deleted successfully!')

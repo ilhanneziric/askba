@@ -83,3 +83,11 @@
     width: 15%;
     margin-left: 10px;
 }
+
+.linkLoginRegister{
+    text-decoration: underline;
+    color: rgb(0, 149, 255);
+    &:hover{
+        color: rgb(234, 0, 234);
+    }
+}

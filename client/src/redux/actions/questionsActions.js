@@ -1,10 +1,11 @@
 import * as actionTypes from '../actionTypes/questionsActionTypes';
 import axios from 'axios';
 import { updOffsetInitial } from './offsetActions';
+import { SERVERURL } from '../../serverURL';
 
 export const addQuestion = (question) => async(dispatch) => {
     try {
-        const response = await axios.post('http://localhost:5000/api/question', question, {
+        const response = await axios.post(`${SERVERURL}/api/question`, question, {
             headers: {token: localStorage.token}
         });
         const parseRes = await response.data;
@@ -25,7 +26,7 @@ export const addQuestion = (question) => async(dispatch) => {
 export const getQuestions = () => async(dispatch, getState) => {
     try {
         const {offset} = getState();
-        const response = await axios.get(`http://localhost:5000/api/question/${offset}`);
+        const response = await axios.get(`${SERVERURL}/api/question/${offset}`);
         const parseRes = await response.data;
         dispatch({
             type: actionTypes.GET_QUESTIONS,
@@ -39,10 +40,10 @@ export const getQuestions = () => async(dispatch, getState) => {
     }
 }
 
-export const getInitialQuestions = () => async(dispatch, getState) => {
+export const getInitialQuestions = () => async(dispatch) => {
     try {
         dispatch(updOffsetInitial());
-        const response = await axios.get(`http://localhost:5000/api/question/0`);
+        const response = await axios.get(`${SERVERURL}/api/question/0`);
         const parseRes = await response.data;
         dispatch({
             type: actionTypes.GET_INITIAL_QUESTIONS,
@@ -58,7 +59,7 @@ export const getInitialQuestions = () => async(dispatch, getState) => {
 export const getQuestionsByUserId = () => async(dispatch, getState) => {
     try {
         const { userId, offset } = getState();
-        const response = await axios.get(`http://localhost:5000/api/question/user/${userId}/${offset}`, {
+        const response = await axios.get(`${SERVERURL}/api/question/user/${userId}/${offset}`, {
             headers: {token: localStorage.token}
         });
         const parseRes = await response.data;
@@ -77,7 +78,7 @@ export const getInitialQuestionsByUserId = () => async(dispatch, getState) => {
     try {
         const { userId } = getState();
         dispatch(updOffsetInitial());
-        const response = await axios.get(`http://localhost:5000/api/question/user/${userId}/0`, {
+        const response = await axios.get(`${SERVERURL}/api/question/user/${userId}/0`, {
             headers: {token: localStorage.token}
         });
         const parseRes = await response.data;

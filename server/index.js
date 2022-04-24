@@ -40,7 +40,6 @@ io.on('connection', (socket) => {
 
     socket.on('register', (id) => {
         socket.join(id);
-        console.log('registrovo se sa idom: ', id);
     });
 
     socket.on('send_notification', (id) => {

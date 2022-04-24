@@ -8,6 +8,7 @@ import { userValidation } from "../validations";
 
 import { useDispatch,  } from "react-redux";
 import { updIsAuthenticated } from '../redux/actions/isAuthenticatedActions';
+import { SERVERURL } from "../serverURL";
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -35,7 +36,7 @@ const Register = () => {
           // setError(error.details[0].message.replaceAll('"', '').charAt(0).toUpperCase() + error.details[0].message.replaceAll('"', '').slice(1));
           toast.error(error.details[0].message.replaceAll('"', '').charAt(0).toUpperCase() + error.details[0].message.replaceAll('"', '').slice(1))
         }else{
-          const response = await axios.post('http://localhost:5000/api/auth/register', inputs);
+          const response = await axios.post(`${SERVERURL}/api/auth/register`, inputs);
           const parseRes = await response.data;
           if(parseRes){
               localStorage.setItem('token', parseRes);
@@ -67,7 +68,7 @@ const Register = () => {
             <button className="logRegSubmit">Sign Up</button>
         </form>
       </div>
-      <div className="logRegLink">Already have an account? <Link to='/login'>Login</Link></div>
+      <div className="logRegLink">Already have an account? <Link to='/login' className="linkLoginRegister">Login</Link></div>
     </>
   )
 }
