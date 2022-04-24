@@ -4,7 +4,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import './styles/app.scss'
 import { useSelector, useDispatch} from 'react-redux';
 import { updIsAuthenticated } from './redux/actions/isAuthenticatedActions';
-import socket from './Socket';
 
 //screens
 import Home from './screens/Home';

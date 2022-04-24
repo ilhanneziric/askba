@@ -1,5 +1,6 @@
 import * as actionTypes from '../actionTypes/notificationsActionTypes';
 import axios from 'axios';
+import { SERVERURL } from '../../serverURL';
 
 export const addNotification = () => async(dispatch, getState) => {
     try {
@@ -11,7 +12,7 @@ export const addNotification = () => async(dispatch, getState) => {
             seen: false,
             userId: question.User.id
         };
-        const response = await axios.post(`http://localhost:5000/api/notification`, body, {
+        const response = await axios.post(`${SERVERURL}/api/notification`, body, {
             headers: {token: localStorage.token}
         });
         const parseRes = await response.data;
@@ -28,7 +29,7 @@ export const addNotification = () => async(dispatch, getState) => {
 export const getNotifications = () => async(dispatch, getState) => {
     try {
         const {userId} = getState();
-        const response = await axios.get(`http://localhost:5000/api/notification/user/${userId}`, {
+        const response = await axios.get(`${SERVERURL}/api/notification/user/${userId}`, {
             headers: {token: localStorage.token}
         });
         const parseRes = await response.data;
@@ -37,7 +38,7 @@ export const getNotifications = () => async(dispatch, getState) => {
             payload: parseRes
         });
 
-        await axios.post(`http://localhost:5000/api/notification/user/${userId}`, {
+        await axios.post(`${SERVERURL}/api/notification/user/${userId}`, {
           headers: {token: localStorage.token}
         });
     } catch (err) {

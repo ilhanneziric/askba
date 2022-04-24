@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { SERVERURL } from '../../serverURL';
 import { getQuestion } from './questionActions';
 
 export const like = (isDislike, answer = null) => async(dispatch, getState) => {
@@ -17,7 +18,7 @@ export const like = (isDislike, answer = null) => async(dispatch, getState) => {
             isDislike: isDislike
         }
         answer === null ? body.questionId = question.id : body.answerId = answer.id;
-        await axios.post(`http://localhost:5000/api/like`, body,{
+        await axios.post(`${SERVERURL}/api/like`, body,{
             headers: {token: localStorage.token}
         });
         dispatch(getQuestion(question.id));
@@ -34,7 +35,7 @@ export const deleteLike = (answer = null) => async(dispatch, getState) => {
         like = question.Likes.find((l) => l.userId === userId) : 
         like = answer.Likes.find((l) => l.userId === userId);
 
-        await axios.delete(`http://localhost:5000/api/like/${like.id}`, {
+        await axios.delete(`${SERVERURL}/api/like/${like.id}`, {
             headers: {token: localStorage.token}
         });
 
