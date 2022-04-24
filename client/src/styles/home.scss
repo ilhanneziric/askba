@@ -1,0 +1,40 @@
+@import './colors';
+
+.content{
+    width: 100%;
+    margin-top: 5rem;
+    position: relative;
+}
+
+
+.main-bar, .side-bar, .inner-bar {
+    margin: 0;
+    outline: 0;
+    display: inline-block;
+}
+
+.main-bar {
+    width: 70%;
+}
+
+.inner-bar {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.side-bar {
+    margin-right: 1rem;
+    width: 25%;
+    right: 0;
+    float: right;
+    position: sticky;
+    top:0; 
+}
+
+.hotUser{
+    margin-bottom: 5px;
+    background-color: $lightGrey;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+}

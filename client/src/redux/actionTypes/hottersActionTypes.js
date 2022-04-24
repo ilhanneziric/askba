@@ -1,0 +1,2 @@
+export const GET_HOT_USERS = "GET_HOT_USERS";
+export const GET_HOT_QUESTIONS = "GET_HOT_QUESTIONS";
